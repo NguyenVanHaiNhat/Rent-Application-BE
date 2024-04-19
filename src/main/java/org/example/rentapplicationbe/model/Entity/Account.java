@@ -14,9 +14,6 @@ public class Account {
     private Long id;
     private String username;
     private String password;
-    private String avatar;
-    private String full_name;
-    private String address;
     private String phone;
     @ManyToOne
     @JoinColumn(name = "id_role")

@@ -7,12 +7,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "account_status")
-public class AccountStatus {
+@Table(name = "account_info")
+public class AccountInformation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String status_account;
+    private String avatar;
+    private String full_name;
+    private String address;
+    private String status;
     @ManyToOne
     @JoinColumn(name = "id_account")
     private Account account;
