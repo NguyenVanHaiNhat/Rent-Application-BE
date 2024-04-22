@@ -12,12 +12,13 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String avatar;
     private String username;
     private String password;
-    private String avatar;
+    private String phone;
     private String full_name;
     private String address;
-    private String phone;
+    private String status;
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;
