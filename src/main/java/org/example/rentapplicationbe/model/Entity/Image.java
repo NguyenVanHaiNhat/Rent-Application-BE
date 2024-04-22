@@ -19,6 +19,6 @@ public class Image {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] image_data;
     @ManyToOne
-    @JoinColumn(name = "id_account_info")
-    private AccountInformation accountInformation;
+    @JoinColumn(name = "id_account")
+    private Account account;
 }
