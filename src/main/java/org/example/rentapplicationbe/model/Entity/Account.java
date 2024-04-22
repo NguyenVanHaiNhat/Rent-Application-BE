@@ -22,7 +22,6 @@ public class Account  implements UserDetails {
     private String username;
     private String password;
     private String phone;
-    private String avatar;
     private String full_name;
     private String address;
     private String status;
