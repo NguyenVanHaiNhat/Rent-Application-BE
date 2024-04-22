@@ -12,7 +12,6 @@ public class AccountInformation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String avatar;
     private String full_name;
     private String address;
     private String status;
