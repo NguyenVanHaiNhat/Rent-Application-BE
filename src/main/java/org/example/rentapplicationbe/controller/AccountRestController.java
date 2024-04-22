@@ -1,10 +1,12 @@
 package org.example.rentapplicationbe.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.rentapplicationbe.config.JwtTokenUtil;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.Role;
 import org.example.rentapplicationbe.model.dto.AccountDTO;
 import org.example.rentapplicationbe.model.dto.ApiResponse;
+import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class AccountRestController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
 
     @PostMapping("/login")
@@ -57,5 +61,15 @@ public class AccountRestController {
         account.setPassword(passwordEncoder.encode(account.getPassword())); // mã hóa password
         iAccountService.save(account); // lưu user vào database
 
+    }
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(
+            @RequestBody ChangePasswordUser request, @RequestHeader("Authorization") String tokenHeader
+    ) {
+        String token = tokenHeader.substring(7);
+        String username1 = jwtTokenUtil.extractUserName(token);
+        iAccountService.findAccountByAccountName(username1);
+        iAccountService.changePassword(username1, request);
+        return ResponseEntity.ok().build();
     }
 }

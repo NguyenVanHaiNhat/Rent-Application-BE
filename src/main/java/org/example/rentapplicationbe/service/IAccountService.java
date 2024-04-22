@@ -1,6 +1,7 @@
 package org.example.rentapplicationbe.service;
 
 import org.example.rentapplicationbe.model.Entity.Account;
+import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -17,9 +18,8 @@ public interface IAccountService {
 
     String login(String nameAccount, String passWord) throws Exception;
 
-
     void save(Account account);
 
-
+    void changePassword(String username, ChangePasswordUser changePasswordUser);
 
 }

@@ -2,11 +2,12 @@ package org.example.rentapplicationbe.service;
 
 import org.example.rentapplicationbe.config.JwtTokenUtil;
 import org.example.rentapplicationbe.model.Entity.Account;
+import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +61,20 @@ public class AccountService implements IAccountService {
     @Override
     public void save(Account account) {
         accountRepository.save(account);
+    }
+
+    public void changePassword(String username,ChangePasswordUser request) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Optional<Account> user = accountRepository.findByUsername(username);
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.get().getPassword())) {
+            throw new IllegalStateException("Wrong password");
+        }
+        if (!request.getNewPassword().equals(request.getCheckNewPassword())) {
+            throw new IllegalStateException("Password are not the same");
+        }
+
+        user.get().setPassword(passwordEncoder.encode(request.getNewPassword()));
+        accountRepository.save(user.get());
     }
 
 }
