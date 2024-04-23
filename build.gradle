@@ -11,7 +11,7 @@ java {
     sourceCompatibility = '17'
 }
 
-repositories {
+repositories {0
     mavenCentral()
 }
 
@@ -35,6 +35,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.2.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.2.3'
+
 
 }
 
