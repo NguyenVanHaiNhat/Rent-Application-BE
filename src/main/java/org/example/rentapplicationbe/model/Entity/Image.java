@@ -22,3 +22,4 @@ public class Image {
     @JoinColumn(name = "id_account")
     private Account account;
 }
+

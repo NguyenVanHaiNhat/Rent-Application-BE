@@ -36,6 +36,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.2.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.2.3'
 
+
 }
 
 tasks.named('test') {
