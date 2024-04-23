@@ -1,6 +1,6 @@
 package org.example.rentapplicationbe.controller;
 
-import org.example.rentapplicationbe.model.DTO.HostDtoDetail;
+import org.example.rentapplicationbe.model.dto.HostDtoDetail;
 import org.example.rentapplicationbe.services.IHostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

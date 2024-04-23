@@ -1,6 +1,6 @@
 package org.example.rentapplicationbe.services;
 
-import org.example.rentapplicationbe.model.DTO.HostDtoDetail;
+import org.example.rentapplicationbe.model.dto.HostDtoDetail;
 
 import java.util.List;
 import java.util.Optional;

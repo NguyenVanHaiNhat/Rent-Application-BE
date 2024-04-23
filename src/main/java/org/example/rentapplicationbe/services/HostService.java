@@ -1,6 +1,6 @@
 package org.example.rentapplicationbe.services;
 
-import org.example.rentapplicationbe.model.DTO.HostDtoDetail;
+import org.example.rentapplicationbe.model.dto.HostDtoDetail;
 import org.example.rentapplicationbe.repository.IHostDtoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

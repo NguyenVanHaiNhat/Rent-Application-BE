@@ -1,4 +1,4 @@
-package org.example.rentapplicationbe.model.DTO;
+package org.example.rentapplicationbe.model.dto;
 
 public interface HostDtoDetail {
     Long getId();
