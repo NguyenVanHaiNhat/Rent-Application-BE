@@ -21,4 +21,5 @@ public class HouseController {
         List<House> houses = iHouseService.findByIdDetailHouse(id);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
+
 }

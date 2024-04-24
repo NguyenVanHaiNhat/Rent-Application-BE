@@ -11,7 +11,7 @@ java {
     sourceCompatibility = '17'
 }
 
-repositories {
+repositories {0
     mavenCentral()
 }
 
