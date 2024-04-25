@@ -54,9 +54,19 @@ public class AccountRestController {
         }
     }
 
-    @PostMapping("/registerr")
-    public ResponseEntity<String> createAccount(@RequestBody Account account) { // tạo tài khoản
+
+    @PostMapping("/registerr/user")
+    public ResponseEntity<String> createAccountUser(@RequestBody Account account) { // tạo tài khoản
         Role role = roleService.findById(2L);
+        account.setRole(role); // 2 là role user
+        System.out.println(account.getFull_name());
+        account.setPassword(passwordEncoder.encode(account.getPassword())); // mã hóa password
+        iAccountService.save(account); // lưu user vào database
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    @PostMapping("/registerr/host")
+    public ResponseEntity<String> createAccountHost(@RequestBody Account account) { // tạo tài khoản
+        Role role = roleService.findById(3L);
         account.setRole(role); // 2 là role user
         System.out.println(account.getFull_name());
         account.setPassword(passwordEncoder.encode(account.getPassword())); // mã hóa password
