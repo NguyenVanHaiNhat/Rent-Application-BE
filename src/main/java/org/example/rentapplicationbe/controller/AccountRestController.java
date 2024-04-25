@@ -10,8 +10,9 @@ import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,12 +55,13 @@ public class AccountRestController {
     }
 
     @PostMapping("/registerr")
-    private void createAccount(@RequestBody Account account) { // tạo tài khoản
+    private ResponseEntity<String> createAccount(@RequestBody Account account) { // tạo tài khoản
         Role role = roleService.findById(2L);
         account.setRole(role); // 2 là role user
         System.out.println(account.getFull_name());
         account.setPassword(passwordEncoder.encode(account.getPassword())); // mã hóa password
         iAccountService.save(account); // lưu user vào database
-
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 }
