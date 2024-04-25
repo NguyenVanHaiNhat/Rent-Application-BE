@@ -22,4 +22,6 @@ public interface IAccountService {
 
     void changePassword(String username, ChangePasswordUser changePasswordUser);
 
+    Optional<Account> findById(Long id);
+
 }
