@@ -27,9 +27,11 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests -> {
                     requests
                             .requestMatchers(("/account/registerr"),
-                                    ("/account/login"),"/account/change-password")
+                                    ("/account/login"))
                             .permitAll()
-                            .anyRequest().permitAll()
+                            .requestMatchers("/users/**").hasRole("USER")
+                            .requestMatchers("/host/**").hasRole("HOST")
+                            .anyRequest().authenticated()
 
                     ;
                 })
