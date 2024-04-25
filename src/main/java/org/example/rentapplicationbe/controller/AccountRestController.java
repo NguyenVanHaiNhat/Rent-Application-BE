@@ -77,6 +77,4 @@ public class AccountRestController {
         iAccountService.changePassword(username1, request);
         return ResponseEntity.ok().build();
     }
-
-
 }
