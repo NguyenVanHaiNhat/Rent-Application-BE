@@ -5,17 +5,20 @@ import org.example.rentapplicationbe.config.JwtTokenUtil;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.Role;
 import org.example.rentapplicationbe.model.dto.AccountDTO;
+import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ApiResponse;
+import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -55,8 +58,8 @@ public class AccountRestController {
         }
     }
 
-    @PostMapping("/registerr/user")
-    public ResponseEntity<String> createAccountUser(@RequestBody Account account) { // tạo tài khoản
+    @PostMapping("/registerr")
+    public ResponseEntity<String> createAccount(@RequestBody Account account) { // tạo tài khoản
         Role role = roleService.findById(2L);
         account.setRole(role); // 2 là role user
         System.out.println(account.getFull_name());
@@ -64,28 +67,14 @@ public class AccountRestController {
         iAccountService.save(account); // lưu user vào database
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @PostMapping("/registerr/host")
-    public ResponseEntity<String> createAccountHost(@RequestBody Account account) { // tạo tài khoản
-        Role role = roleService.findById(3L);
-        account.setRole(role); // 2 là role user
-        System.out.println(account.getFull_name());
-        account.setPassword(passwordEncoder.encode(account.getPassword())); // mã hóa password
-        iAccountService.save(account); // lưu user vào database
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Account> findUserById(@PathVariable Long id){
-        Optional<Account> account = iAccountService.findById(id);
-        if (!account.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(account.get(), HttpStatus.OK);
-    }
-
-    @PutMapping("/update/infor/{id}")
-    public ResponseEntity<Account> updateInfor(@PathVariable Long id, @RequestBody Account account){
-        iAccountService.save(account);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(
+            @RequestBody ChangePasswordUser request, @RequestHeader("Authorization") String tokenHeader
+    ) {
+        String token = tokenHeader.substring(7);
+        String username1 = jwtTokenUtil.extractUserName(token);
+        iAccountService.findAccountByAccountName(username1);
+        iAccountService.changePassword(username1, request);
+        return ResponseEntity.ok().build();
     }
 }

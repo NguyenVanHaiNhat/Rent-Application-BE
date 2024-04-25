@@ -1,8 +1,10 @@
 package org.example.rentapplicationbe.service;
 
 import org.example.rentapplicationbe.model.Entity.Account;
+import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,8 @@ public interface IAccountService {
 
     void changePassword(String username, ChangePasswordUser changePasswordUser);
 
-    Optional<Account> findById(Long id);
+    List<AccountUserDTO> findAllUser(String username);
+
+    void updateAccountStatus(Long id, String newStatus);
 
 }
