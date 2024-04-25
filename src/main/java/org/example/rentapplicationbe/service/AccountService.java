@@ -77,4 +77,9 @@ public class AccountService implements IAccountService {
         accountRepository.save(user.get());
     }
 
+    @Override
+    public Optional<Account> findById(Long id) {
+        return accountRepository.findById(id);
+    }
+
 }

@@ -6,7 +6,6 @@ import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.Role;
 import org.example.rentapplicationbe.model.dto.AccountDTO;
 import org.example.rentapplicationbe.model.dto.ApiResponse;
-import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -62,5 +63,20 @@ public class AccountRestController {
         account.setPassword(passwordEncoder.encode(account.getPassword())); // mã hóa password
         iAccountService.save(account); // lưu user vào database
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> findUserById(@PathVariable Long id){
+        Optional<Account> account = iAccountService.findById(id);
+        if (!account.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account.get(), HttpStatus.OK);
+    }
+
+    @PutMapping("/update/infor/{id}")
+    public ResponseEntity<Account> updateInfor(@PathVariable Long id, @RequestBody Account account){
+        iAccountService.save(account);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 }
