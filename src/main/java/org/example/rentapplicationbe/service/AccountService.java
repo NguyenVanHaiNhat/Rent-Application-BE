@@ -2,8 +2,10 @@ package org.example.rentapplicationbe.service;
 
 import org.example.rentapplicationbe.config.JwtTokenUtil;
 import org.example.rentapplicationbe.model.Entity.Account;
+import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.repository.AccountRepository;
+import org.example.rentapplicationbe.repository.IHostDtoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 
@@ -24,6 +27,9 @@ public class AccountService implements IAccountService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IHostDtoRepository iHostDtoRepository;
 //
 //    @Override
 //    public Optional<Account> findAccountByEmail(String email) {
@@ -75,6 +81,17 @@ public class AccountService implements IAccountService {
 
         user.get().setPassword(passwordEncoder.encode(request.getNewPassword()));
         accountRepository.save(user.get());
+    }
+
+    @Override
+    public List<AccountUserDTO> findAllUser(String username) {
+        return accountRepository.findAllUser();
+    }
+
+
+    @Override
+    public void updateAccountStatus(Long id, String newStatus) {
+        iHostDtoRepository.updateAccountStatus(id, newStatus);
     }
 
 }

@@ -1,9 +1,13 @@
 package org.example.rentapplicationbe.repository;
 
 import org.example.rentapplicationbe.model.Entity.Account;
+import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,4 +20,8 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     boolean existsByUsername(String nameAccount);
 
+    @Query(nativeQuery = true, value = "select full_name, phone, status\n" +
+            "from `account`\n" +
+            "where id_role = 1;")
+    List<AccountUserDTO> findAllUser();
 }

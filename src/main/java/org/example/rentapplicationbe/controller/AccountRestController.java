@@ -5,6 +5,7 @@ import org.example.rentapplicationbe.config.JwtTokenUtil;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.Role;
 import org.example.rentapplicationbe.model.dto.AccountDTO;
+import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ApiResponse;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.service.IAccountService;
@@ -13,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -73,4 +77,6 @@ public class AccountRestController {
         iAccountService.changePassword(username1, request);
         return ResponseEntity.ok().build();
     }
+
+
 }
