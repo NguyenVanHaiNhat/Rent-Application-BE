@@ -42,6 +42,11 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    public List<Account> checkUserName(String accountName) {
+        return accountRepository.checkUserName(accountName);
+    }
+
+    @Override
     public Optional<Account> findAccountByPhone(String phoneNumber) {
         return accountRepository.findByPhone(phoneNumber);
     }

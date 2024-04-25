@@ -14,6 +14,7 @@ public interface IAccountService {
 
 
     Optional<Account> findAccountByAccountName(String accountName);
+    List<Account> checkUserName(String accountName);
 
 
     Optional<Account> findAccountByPhone(String phoneNumber);
