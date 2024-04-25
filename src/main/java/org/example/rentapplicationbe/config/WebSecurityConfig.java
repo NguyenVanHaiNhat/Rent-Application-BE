@@ -26,7 +26,7 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
                     requests
-                            .requestMatchers(("/account/registerr"),
+                            .requestMatchers(("/account/registerr/**"),
                                     ("/account/login"))
                             .permitAll()
                             .anyRequest().authenticated()
