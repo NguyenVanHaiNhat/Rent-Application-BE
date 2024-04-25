@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 
@@ -33,6 +34,11 @@ public class AccountService implements IAccountService {
     @Override
     public Optional<Account> findAccountByAccountName(String accountName) {
         return accountRepository.findByUsername(accountName);
+    }
+
+    @Override
+    public List<Account> checkUserName(String accountName) {
+        return accountRepository.checkUserName(accountName);
     }
 
     @Override

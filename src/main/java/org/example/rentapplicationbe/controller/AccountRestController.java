@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/account")
@@ -82,5 +84,10 @@ public class AccountRestController {
         iAccountService.findAccountByAccountName(username1);
         iAccountService.changePassword(username1, request);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/checkUserName")
+    private ResponseEntity<List<Account>> checkUserName(@RequestParam String userName) { // kiểm tra tên tài khoản đã tồn tại chưa
+        List<Account> list = iAccountService.checkUserName(userName); // kiểm tra tên tài khoản đã tồn tại chưa
+        return new ResponseEntity<>(list, HttpStatus.OK); // trả về list user
     }
 }
