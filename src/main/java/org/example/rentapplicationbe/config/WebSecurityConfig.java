@@ -26,10 +26,10 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
                     requests
-                            .requestMatchers(("/account/registerr"),
-                                    ("/account/login"),"/account/change-password")
+                            .requestMatchers(("/account/registerr/**"),
+                                    ("/account/login"))
                             .permitAll()
-                            .anyRequest().permitAll()
+                            .anyRequest().authenticated()
 
                     ;
                 })

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IHostService {
-    List<HostDtoDetail> getHostInfor();
+    List<HostDtoDetail> getHostInfor(String username);
     Optional<HostDtoDetail> findByIdHost(Long id);
     void updateAccountStatus(Long id, String newStatus);
 }
