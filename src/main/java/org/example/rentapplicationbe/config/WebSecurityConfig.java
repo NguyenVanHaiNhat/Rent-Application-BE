@@ -29,8 +29,6 @@ public class WebSecurityConfig {
                             .requestMatchers(("/account/registerr"),
                                     ("/account/login"))
                             .permitAll()
-                            .requestMatchers("/users/**").hasRole("USER")
-                            .requestMatchers("/host/**").hasRole("HOST")
                             .anyRequest().authenticated()
 
                     ;
