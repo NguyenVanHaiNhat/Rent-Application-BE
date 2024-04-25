@@ -29,4 +29,6 @@ public interface IAccountService {
 
     void updateAccountStatus(Long id, String newStatus);
 
+    Optional<Account> findById(Long id);
+
 }

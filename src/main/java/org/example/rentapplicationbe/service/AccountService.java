@@ -99,4 +99,9 @@ public class AccountService implements IAccountService {
         iHostDtoRepository.updateAccountStatus(id, newStatus);
     }
 
+    @Override
+    public Optional<Account> findById(Long id) {
+        return accountRepository.findById(id);
+    }
+
 }
