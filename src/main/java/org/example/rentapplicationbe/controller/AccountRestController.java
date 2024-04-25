@@ -15,10 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -91,5 +93,20 @@ public class AccountRestController {
     private ResponseEntity<List<Account>> checkUserName(@RequestParam String userName) { // kiểm tra tên tài khoản đã tồn tại chưa
         List<Account> list = iAccountService.checkUserName(userName); // kiểm tra tên tài khoản đã tồn tại chưa
         return new ResponseEntity<>(list, HttpStatus.OK); // trả về list user
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> findAccountById(@PathVariable Long id){
+        Optional<Account> account = iAccountService.findById(id);
+        if (!account.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account.get(), HttpStatus.OK);
+    }
+
+    @PutMapping("/update/infor/{id}")
+    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account){
+        iAccountService.save(account);
+        return new ResponseEntity<>(account , HttpStatus.OK);
     }
 }
