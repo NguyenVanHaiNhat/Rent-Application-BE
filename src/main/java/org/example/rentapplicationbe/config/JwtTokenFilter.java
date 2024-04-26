@@ -79,7 +79,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 Pair.of("account/checkPhoneNumber", "GET"),
                 Pair.of("type/getAll", "GET"),
                 Pair.of("account/confirm", "GET"),
-                Pair.of("account/checkEmail", "GET")
+                Pair.of("account/checkEmail", "GET"),
+                Pair.of("account/update/infor", "PUT")
         );
         for (Pair<String, String> byPassToken : byPassTokens) {
             if (request.getServletPath().contains(byPassToken.getFirst()) &&

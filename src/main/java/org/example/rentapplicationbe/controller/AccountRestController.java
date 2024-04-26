@@ -105,8 +105,23 @@ public class AccountRestController {
     }
 
     @PutMapping("/update/infor/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account){
-        iAccountService.save(account);
-        return new ResponseEntity<>(account , HttpStatus.OK);
+    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account, @RequestHeader("Authorization") String tokenHeader){
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Account> accountUpdate = iAccountService.findById(id);
+        if (!accountUpdate.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Account existingAccount = accountUpdate.get();
+        existingAccount.setAvatar(account.getAvatar());
+        existingAccount.setFull_name(account.getFull_name());
+        existingAccount.setAddress(account.getAddress());
+
+        iAccountService.save(existingAccount);
+
+        return new ResponseEntity<>(existingAccount, HttpStatus.OK);
     }
 }
