@@ -18,4 +18,7 @@ public class House {
     private Integer num_of_bathrooms;
     private Long price_of_day;
     private String image;
+    @ManyToOne
+    @JoinColumn(name = "id_account")
+    private Account account;
 }
