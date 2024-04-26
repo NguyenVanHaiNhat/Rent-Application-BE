@@ -50,12 +50,8 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
-                    requests
-                            .requestMatchers(("/account/registerr/**"),
-                                    ("/account/login"),
-                                    ("/account/checkUserName"))
-                            .permitAll()
-                            .anyRequest().authenticated()
+                    requests.anyRequest().permitAll()
+
                     ;
                 })
         ;
