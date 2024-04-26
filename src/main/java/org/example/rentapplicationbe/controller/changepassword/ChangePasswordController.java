@@ -1,6 +1,6 @@
 package org.example.rentapplicationbe.controller.changepassword;
 
-import org.example.rentapplicationbe.config.JwtTokenUtil;
+import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("")
 public class ChangePasswordController {
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtService jwtService;
     @Autowired
     private IAccountService iAccountService;
 
@@ -23,7 +23,7 @@ public class ChangePasswordController {
             @RequestBody ChangePasswordUser request, @RequestHeader("Authorization") String tokenHeader
     ) {
         String token = tokenHeader.substring(7);
-        String username = jwtTokenUtil.extractUserName(token);
+        String username = jwtService.getUsernameFromJwtToken(token);
         iAccountService.findAccountByAccountName(username);
         iAccountService.changePassword(username, request);
         return ResponseEntity.ok().build();

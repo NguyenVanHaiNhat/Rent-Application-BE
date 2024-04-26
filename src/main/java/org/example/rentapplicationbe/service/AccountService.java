@@ -1,6 +1,6 @@
 package org.example.rentapplicationbe.service;
 
-import org.example.rentapplicationbe.config.JwtTokenUtil;
+import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
@@ -22,7 +22,7 @@ public class AccountService implements IAccountService {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtService jwtService;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -53,20 +53,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public String login(String nameAccount, String passWord) throws Exception {
-        Optional<Account> optionalUser = accountRepository.findByUsername(nameAccount);
-        if (optionalUser.isEmpty()) {
-            throw new DataFormatException("Sai tai khoan hoac mat khau ");
-        }
-        Account existingUser = optionalUser.get();
-
-        // chua dang nhap google
-
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                nameAccount, passWord, existingUser.getAuthorities()
-        );
-        authenticationManager.authenticate(authenticationToken);
-        return jwtTokenUtil.generateToken(optionalUser.get());
+        return null;
     }
 
     @Override
