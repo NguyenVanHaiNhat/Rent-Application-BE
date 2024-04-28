@@ -1,7 +1,6 @@
 package org.example.rentapplicationbe.service;
 
 import org.example.rentapplicationbe.config.JwtTokenUtil;
-import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
 import org.example.rentapplicationbe.repository.AccountRepository;

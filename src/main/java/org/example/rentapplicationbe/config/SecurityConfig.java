@@ -1,7 +1,6 @@
 package org.example.rentapplicationbe.config;
 
 import lombok.RequiredArgsConstructor;
-import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

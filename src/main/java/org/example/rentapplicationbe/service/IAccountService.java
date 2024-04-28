@@ -1,10 +1,7 @@
 package org.example.rentapplicationbe.service;
 
-import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;

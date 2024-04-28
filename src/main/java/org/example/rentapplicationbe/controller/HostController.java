@@ -1,7 +1,6 @@
 package org.example.rentapplicationbe.controller;
 
 import org.example.rentapplicationbe.config.JwtTokenUtil;
-import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.dto.HostDtoDetail;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.services.IHostService;
