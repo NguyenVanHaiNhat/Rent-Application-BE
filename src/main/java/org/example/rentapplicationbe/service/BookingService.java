@@ -17,4 +17,9 @@ public class BookingService implements IBookingService {
     public void save(BookHouseDTO bookHouseDTO) {
         iBookingRepository.saveBookAHouse(bookHouseDTO);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        iBookingRepository.deleteById(id);
+    }
 }

@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface IBookingService {
     void save(BookHouseDTO bookHouseDTO);
+    void deleteById(Long id);
+
 }

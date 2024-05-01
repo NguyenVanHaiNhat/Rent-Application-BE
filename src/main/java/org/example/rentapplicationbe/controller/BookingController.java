@@ -56,4 +56,14 @@ public class BookingController {
             return new ResponseEntity<>("Failed to save booking: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/cancel/{id}")
+    public ResponseEntity<Void> cancelBooking (@PathVariable Long id) {
+        if (iBookingRepository.findById(id).get().getStart_date().isAfter(LocalDate.now().minusDays(1))) {
+            iBookingService.deleteById(id);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 }
