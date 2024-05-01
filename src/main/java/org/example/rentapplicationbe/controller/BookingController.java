@@ -56,7 +56,4 @@ public class BookingController {
             return new ResponseEntity<>("Failed to save booking: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
 }
