@@ -16,6 +16,10 @@ public class House {
     private String address;
     private Integer num_of_bedrooms;
     private Integer num_of_bathrooms;
+    private String description;
     private Long price_of_day;
     private String image;
+    @ManyToOne
+    @JoinColumn(name = "id_account")
+    private Account account;
 }
