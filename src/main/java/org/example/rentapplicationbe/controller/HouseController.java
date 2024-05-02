@@ -25,10 +25,23 @@ public class HouseController {
     private IAccountService iAccountService;
 
     @GetMapping("/owner/{id}")
-    public ResponseEntity<List<House>> findAllHouse(@PathVariable Long id) {
+    public ResponseEntity<List<House>> findAllHouse(@PathVariable Long id, @RequestHeader("Authorization") String tokenHeader) {
+        String token = tokenHeader.substring(7);
+        String username1 = jwtService.getUsernameFromJwtToken(token);
+        iAccountService.findAccountByAccountName(username1);
         List<House> houses = iHouseService.findByIdDetailHouse(id);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
+
+    @PostMapping()
+    public ResponseEntity<House> createHouse(@RequestBody House house, @RequestHeader("Authorization") String tokenHeader) {
+        String token = tokenHeader.substring(7);
+        String username1 = jwtService.getUsernameFromJwtToken(token);
+        iAccountService.findAccountByAccountName(username1);
+        House house1 = iHouseService.save(house);
+        return new ResponseEntity<>(house1, HttpStatus.CREATED);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<House> getHouseById(@PathVariable Long id) {
         Optional<House> houseOptional = iHouseService.findById(id);
@@ -42,7 +55,7 @@ public class HouseController {
     public ResponseEntity<House> editHouseById(@RequestBody House house, @RequestHeader("Authorization") String tokenHeader) {
         String token = tokenHeader.substring(7);
         String username1 = jwtService.getUsernameFromJwtToken(token);
-        Optional<Account>accountOptional = iAccountService.findAccountByAccountName(username1);
+        Optional<Account> accountOptional = iAccountService.findAccountByAccountName(username1);
         if (!accountOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
