@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingService implements IBookingService {
@@ -19,7 +20,12 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id,String username) {
         iBookingRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Bookings> checkDate(LocalDate start_date, LocalDate end_date, Long id) {
+        return iBookingRepository.checkDate(start_date,end_date,id);
     }
 }
