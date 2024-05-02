@@ -14,7 +14,7 @@ public class HostService implements IHostService {
     private IHostDtoRepository iHostDtoRepository;
 
     @Override
-    public List<HostDtoDetail> getHostInfor() {
+    public List<HostDtoDetail> getHostInfor(String username) {
         return iHostDtoRepository.getHostInfor();
     }
 
