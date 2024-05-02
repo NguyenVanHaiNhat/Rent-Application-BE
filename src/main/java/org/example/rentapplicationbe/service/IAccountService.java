@@ -19,7 +19,7 @@ public interface IAccountService {
 
     Optional<Account> findAccountByPhone(String phoneNumber);
 
-    String login(String nameAccount, String passWord) throws Exception;
+//    String login(String nameAccount, String passWord) throws Exception;
 
     void save(Account account);
 
