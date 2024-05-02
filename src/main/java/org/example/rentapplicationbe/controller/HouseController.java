@@ -29,6 +29,21 @@ public class HouseController {
         List<House> houses = iHouseService.findByIdDetailHouse(id);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
+    @GetMapping("/ownerRented/{id}")
+    public ResponseEntity<List<House>> findAllRented(@PathVariable Long id) {
+        List<House> houses = iHouseService.findRentedHousesByOwnerId(id);
+        return new ResponseEntity<>(houses, HttpStatus.OK);
+    }
+    @GetMapping("/ownerMaintenance/{id}")
+    public ResponseEntity<List<House>> findAllHouseMaintenance(@PathVariable Long id) {
+        List<House> houses = iHouseService.findMaintenanceHousesByOwnerId(id);
+        return new ResponseEntity<>(houses, HttpStatus.OK);
+    }
+    @GetMapping("/ownerAvailable/{id}")
+    public ResponseEntity<List<House>> findAllHouseAvailable(@PathVariable Long id) {
+        List<House> houses = iHouseService.findAvailableHousesByOwnerId(id);
+        return new ResponseEntity<>(houses, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<House> getHouseById(@PathVariable Long id) {
         Optional<House> houseOptional = iHouseService.findById(id);

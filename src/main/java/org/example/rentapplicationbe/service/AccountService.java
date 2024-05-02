@@ -51,10 +51,10 @@ public class AccountService implements IAccountService {
         return accountRepository.findByPhone(phoneNumber);
     }
 
-    @Override
-    public String login(String nameAccount, String passWord) throws Exception {
-        return null;
-    }
+//    @Override
+//    public String login(String nameAccount, String passWord) throws Exception {
+//        return null;
+//    }
 
     @Override
     public void save(Account account) {
