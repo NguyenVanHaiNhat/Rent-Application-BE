@@ -9,4 +9,6 @@ public interface IHouseService {
     Optional<House> findById(Long id);
 
     House save(House house);
+    void saveHouse(House house);
+    List<House> getAllList();
 }

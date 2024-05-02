@@ -26,4 +26,14 @@ public class HouseService implements IHouseService {
     public House save(House house) {
         return iHouseRepository.save(house);
     }
+
+    @Override
+    public void saveHouse(House house) {
+        iHouseRepository.save(house);
+    }
+
+    @Override
+    public List<House> getAllList() {
+        return iHouseRepository.getAllList();
+    }
 }

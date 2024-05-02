@@ -26,5 +26,5 @@ public class HostService implements IHostService {
     @Override
     public void updateAccountStatus(Long id, String newStatus) {
         iHostDtoRepository.updateAccountStatus(id, newStatus);
-    }
+    }   
 }

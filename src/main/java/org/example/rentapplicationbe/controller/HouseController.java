@@ -4,10 +4,14 @@ import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.House;
 import org.example.rentapplicationbe.service.IAccountService;
+import jakarta.validation.Valid;
+import org.example.rentapplicationbe.model.dto.HouseDTO;
 import org.example.rentapplicationbe.services.house.IHouseService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,5 +54,22 @@ public class HouseController {
         house.setAccount(account);
         House house1 = iHouseService.save(house);
         return new ResponseEntity<>(house1, HttpStatus.OK);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody @Valid HouseDTO houseDTO, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(bindingResult.getFieldErrors(),
+                    HttpStatus.NOT_ACCEPTABLE);
+        }
+        House house = new House();
+        BeanUtils.copyProperties(houseDTO, house);
+        iHouseService.save(house);
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/getCustomers")
+    public ResponseEntity<List<House>> getCustomers (){
+        List<House> newList = iHouseService.getAllList();
+        return new ResponseEntity<>(newList, HttpStatus.OK);
     }
 }

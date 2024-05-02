@@ -13,6 +13,8 @@ public interface IHouseRepository extends JpaRepository<House, Long> {
             "INNER JOIN account acc ON b.id_account = acc.id " +
             "WHERE acc.id = :id ")
     List<House> findByIdDetailHouse(@Param("id") Long id);
+    @Query(value = "select * from house", nativeQuery = true)
+    List<House> getAllList();
 }
 
 
