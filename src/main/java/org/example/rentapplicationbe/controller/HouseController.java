@@ -3,6 +3,7 @@ package org.example.rentapplicationbe.controller;
 import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.House;
+import org.example.rentapplicationbe.model.dto.HouseDetail;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.services.house.IHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,21 @@ public class HouseController {
 
 
 
+    @GetMapping("/ownerRented/{id}")
+    public ResponseEntity<List<House>> findAllRented(@PathVariable Long id) {
+        List<House> houses = iHouseService.findRentedHousesByOwnerId(id);
+        return new ResponseEntity<>(houses, HttpStatus.OK);
+    }
+    @GetMapping("/ownerMaintenance/{id}")
+    public ResponseEntity<List<House>> findAllHouseMaintenance(@PathVariable Long id) {
+        List<House> houses = iHouseService.findMaintenanceHousesByOwnerId(id);
+        return new ResponseEntity<>(houses, HttpStatus.OK);
+    }
+    @GetMapping("/ownerAvailable/{id}")
+    public ResponseEntity<List<House>> findAllHouseAvailable(@PathVariable Long id) {
+        List<House> houses = iHouseService.findAvailableHousesByOwnerId(id);
+        return new ResponseEntity<>(houses, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<House> getHouseById(@PathVariable Long id) {
         Optional<House> houseOptional = iHouseService.findById(id);
@@ -42,6 +58,14 @@ public class HouseController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(houseOptional.get(), HttpStatus.OK);
+    }
+    @GetMapping("/detail/image/{id}")
+    public ResponseEntity<HouseDetail> getHouseByIdImages(@PathVariable Long id) {
+        Optional<HouseDetail> houseImage = iHouseService.findByIdHouseImage(id);
+        if (!houseImage.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(houseImage.get(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

@@ -19,6 +19,7 @@ public class House {
     private String description;
     private Long price_of_day;
     private String image;
+    private String status;
     @ManyToOne
     @JoinColumn(name = "id_account")
     private Account account;
