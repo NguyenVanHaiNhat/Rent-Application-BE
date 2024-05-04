@@ -9,9 +9,7 @@ import java.util.List;
 public interface IHouseRepository extends JpaRepository<House, Long> {
     @Query(nativeQuery = true, value = "SELECT DISTINCT h.* " +
             "FROM house h " +
-            "INNER JOIN bookings b ON h.id = b.id_house " +
-            "INNER JOIN account acc ON b.id_account = acc.id " +
-            "WHERE acc.id = :id ")
+            "WHERE id_account = :id ")
     List<House> findByIdDetailHouse(@Param("id") Long id);
 }
 

@@ -33,14 +33,7 @@ public class HouseController {
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<House> createHouse(@RequestBody House house, @RequestHeader("Authorization") String tokenHeader) {
-        String token = tokenHeader.substring(7);
-        String username1 = jwtService.getUsernameFromJwtToken(token);
-        iAccountService.findAccountByAccountName(username1);
-        House house1 = iHouseService.save(house);
-        return new ResponseEntity<>(house1, HttpStatus.CREATED);
-    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<House> getHouseById(@PathVariable Long id) {
