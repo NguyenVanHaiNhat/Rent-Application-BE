@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IHouseRepository extends JpaRepository<House, Long> {
+    @Query(nativeQuery = true, value = "SELECT DISTINCT h.* \n" +
+            "FROM house h \n" +
+            "WHERE id_account = :id and name_house like :name and status like :status ")
+    List<House> findByIdDetailHouse(@Param("id") Long id, @Param("name") String name, @Param("status") String status);
     @Query(nativeQuery = true,value = "SELECT house.*, GROUP_CONCAT(image.image_url) AS all_images\n" +
             "FROM house\n" +
             "LEFT JOIN image ON house.id = image.id_house\n" +

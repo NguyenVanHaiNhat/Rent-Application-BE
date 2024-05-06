@@ -27,7 +27,13 @@ public class HouseController {
     private IAccountService iAccountService;
     @Autowired
     private AccountRepository accountRepository;
-
+    @GetMapping("/owner/{id}")
+    public ResponseEntity<List<House>> findAllHouse(@PathVariable Long id,
+                                                    @RequestParam(required = false, defaultValue = "") String name,
+                                                    @RequestParam(required = false, defaultValue = "") String status) {
+        List<House> houses = iHouseService.findByIdDetailHouse(id, name, status);
+        return ResponseEntity.ok(houses);
+    }
     @GetMapping("/ownerRented/{id}")
     public ResponseEntity<List<House>> findAllRented(@PathVariable Long id) {
         List<House> houses = iHouseService.findRentedHousesByOwnerId(id);
