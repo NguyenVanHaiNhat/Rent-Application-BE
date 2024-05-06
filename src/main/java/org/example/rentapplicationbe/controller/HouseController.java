@@ -28,17 +28,6 @@ public class HouseController {
     @Autowired
     private AccountRepository accountRepository;
 
-    @GetMapping("/owner/{id}")
-    public ResponseEntity<List<House>> findAllHouse(@PathVariable Long id, @RequestHeader("Authorization") String tokenHeader) {
-        String token = tokenHeader.substring(7);
-        String username1 = jwtService.getUsernameFromJwtToken(token);
-        iAccountService.findAccountByAccountName(username1);
-        List<House> houses = iHouseService.findByIdDetailHouse(id);
-        return new ResponseEntity<>(houses, HttpStatus.OK);
-    }
-
-
-
     @GetMapping("/ownerRented/{id}")
     public ResponseEntity<List<House>> findAllRented(@PathVariable Long id) {
         List<House> houses = iHouseService.findRentedHousesByOwnerId(id);
