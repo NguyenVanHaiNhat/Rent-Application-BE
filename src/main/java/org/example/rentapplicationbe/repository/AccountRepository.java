@@ -24,7 +24,7 @@
         @Query(value = "select * from account where account.username = :userName", nativeQuery = true)
         List<Account> checkUserName(@Param("userName") String userName);
 
-        @Query(nativeQuery = true, value = "select full_name, phone, status\n" +
+        @Query(nativeQuery = true, value = "select id, full_name, phone, status\n" +
                 "from `account`\n" +
                 "where id_role = 1;")
         List<AccountUserDTO> findAllUser();

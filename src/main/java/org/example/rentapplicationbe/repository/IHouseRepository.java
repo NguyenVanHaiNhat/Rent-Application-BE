@@ -14,6 +14,7 @@ public interface IHouseRepository extends JpaRepository<House, Long> {
             "FROM house h " +
             "WHERE id_account = :id ")
     List<House> findByIdDetailHouse(@Param("id") Long id);
+
     @Query(nativeQuery = true,value = "SELECT house.*, GROUP_CONCAT(image.image_url) AS all_images\n" +
             "FROM house\n" +
             "LEFT JOIN image ON house.id = image.id_house\n" +

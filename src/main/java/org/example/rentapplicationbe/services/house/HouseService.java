@@ -27,6 +27,8 @@ public class HouseService implements IHouseService {
     public List<House> findAvailableHousesByOwnerId(Long id) {
         return iHouseRepository.findAvailableHousesByOwnerId(id);
     }
+
+
     @Override
     public Optional<House> findById(Long id) {
         return iHouseRepository.findById(id);

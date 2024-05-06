@@ -27,7 +27,6 @@ public class AccountController {
 
 
     @GetMapping("/user")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<AccountUserDTO>> getAllUser(@RequestHeader("Authorization") String tokenHeader) {
         String token = tokenHeader.substring(7);
         String username1 = jwtService.getUsernameFromJwtToken(token);
