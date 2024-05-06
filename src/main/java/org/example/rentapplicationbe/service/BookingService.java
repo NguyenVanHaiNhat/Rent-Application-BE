@@ -1,7 +1,10 @@
 package org.example.rentapplicationbe.service;
 
+import jakarta.transaction.Transactional;
 import org.example.rentapplicationbe.model.Entity.Bookings;
+import org.example.rentapplicationbe.model.Entity.House;
 import org.example.rentapplicationbe.model.dto.BookHouseDTO;
+import org.example.rentapplicationbe.model.dto.HistoryBooking;
 import org.example.rentapplicationbe.repository.IBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +22,25 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id,String username) {
         iBookingRepository.deleteById(id);
     }
+
+    @Override
+    public List<Bookings> checkDate(LocalDate start_date, LocalDate end_date, Long id) {
+        return iBookingRepository.checkDate(start_date,end_date,id);
+    }
+
+    @Override
+    public List<HistoryBooking> findAllByAccount(Long id, String username) {
+        return iBookingRepository.findAllByAccount(id);
+    }
+
+    @Transactional
+    @Override
+    public void updateStatus(Long id) {
+        iBookingRepository.updateStatus(id);
+    }
+
+
 }

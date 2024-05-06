@@ -77,7 +77,7 @@ public class AccountRestController {
 
     @PostMapping("/registerr/user")
     public ResponseEntity<String> createAccountUser(@RequestBody Account account) { // tạo tài khoản
-        Role role = roleService.findById(2L);
+        Role role = roleService.findById(1L);
         account.setRole(role); // 2 là role user
         System.out.println(account.getFull_name());
         account.setPassword(passwordEncoder.encode(account.getPassword())); // mã hóa password
@@ -87,7 +87,7 @@ public class AccountRestController {
 
     @PostMapping("/registerr/host")
     public ResponseEntity<String> createAccountHost(@RequestBody Account account) { // tạo tài khoản
-        Role role = roleService.findById(3L);
+        Role role = roleService.findById(2L);
         account.setRole(role); // 2 là role user
         System.out.println(account.getFull_name());
         account.setPassword(passwordEncoder.encode(account.getPassword())); // mã hóa password
