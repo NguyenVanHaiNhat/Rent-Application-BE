@@ -1,6 +1,7 @@
 package org.example.rentapplicationbe.services.house;
 
 import org.example.rentapplicationbe.model.Entity.House;
+import org.example.rentapplicationbe.model.dto.HouseDetail;
 import org.example.rentapplicationbe.repository.IHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class HouseService implements IHouseService {
     @Override
     public Optional<House> findById(Long id) {
         return iHouseRepository.findById(id);
+    }
+    @Override
+    public Optional<HouseDetail> findByIdHouseImage(Long id) {
+        return iHouseRepository.findByIdHouseImages(id);
     }
 
     @Override

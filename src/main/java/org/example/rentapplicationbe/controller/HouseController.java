@@ -3,6 +3,7 @@ package org.example.rentapplicationbe.controller;
 import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.House;
+import org.example.rentapplicationbe.model.dto.HouseDetail;
 import org.example.rentapplicationbe.repository.AccountRepository;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.services.house.IHouseService;
@@ -28,10 +29,16 @@ public class HouseController {
     private AccountRepository accountRepository;
 
     @GetMapping("/owner/{id}")
-    public ResponseEntity<List<House>> findAllHouse(@PathVariable Long id) {
+    public ResponseEntity<List<House>> findAllHouse(@PathVariable Long id, @RequestHeader("Authorization") String tokenHeader) {
+        String token = tokenHeader.substring(7);
+        String username1 = jwtService.getUsernameFromJwtToken(token);
+        iAccountService.findAccountByAccountName(username1);
         List<House> houses = iHouseService.findByIdDetailHouse(id);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
+
+
+
     @GetMapping("/ownerRented/{id}")
     public ResponseEntity<List<House>> findAllRented(@PathVariable Long id) {
         List<House> houses = iHouseService.findRentedHousesByOwnerId(id);
@@ -55,12 +62,20 @@ public class HouseController {
         }
         return new ResponseEntity<>(houseOptional.get(), HttpStatus.OK);
     }
+    @GetMapping("/detail/image/{id}")
+    public ResponseEntity<HouseDetail> getHouseByIdImages(@PathVariable Long id) {
+        Optional<HouseDetail> houseImage = iHouseService.findByIdHouseImage(id);
+        if (!houseImage.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(houseImage.get(), HttpStatus.OK);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<House> editHouseById(@RequestBody House house, @RequestHeader("Authorization") String tokenHeader) {
         String token = tokenHeader.substring(7);
         String username1 = jwtService.getUsernameFromJwtToken(token);
-        Optional<Account>accountOptional = iAccountService.findAccountByAccountName(username1);
+        Optional<Account> accountOptional = iAccountService.findAccountByAccountName(username1);
         if (!accountOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
