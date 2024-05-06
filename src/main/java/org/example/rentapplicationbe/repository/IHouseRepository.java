@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 public interface IHouseRepository extends JpaRepository<House, Long> {
-    @Query(nativeQuery = true, value = "SELECT DISTINCT h.* " +
-            "FROM house h " +
-            "WHERE id_account = :id ")
-    List<House> findByIdDetailHouse(@Param("id") Long id);
+    @Query(nativeQuery = true, value = "SELECT DISTINCT h.* \n" +
+            "FROM house h \n" +
+            "WHERE id_account = :id and name_house like :name and status like :status ")
+    List<House> findByIdDetailHouse(@Param("id") Long id, @Param("name") String name, @Param("status") String status);
+
     @Query(nativeQuery = true, value = "SELECT DISTINCT h.* " +
             "FROM house h " +
             "WHERE h.id_account = :id AND h.status = 'rented'")

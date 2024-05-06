@@ -24,10 +24,4 @@ public class Account  {
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;
-
-
-//    public Account(Long id) {
-//        this.id = id;
-//    }
-
 }
