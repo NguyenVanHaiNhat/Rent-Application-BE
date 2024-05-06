@@ -5,6 +5,7 @@ import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.Bookings;
 import org.example.rentapplicationbe.model.Entity.House;
 import org.example.rentapplicationbe.model.dto.BookHouseDTO;
+import org.example.rentapplicationbe.model.dto.HistoryBooking;
 import org.example.rentapplicationbe.model.dto.HostDtoDetail;
 import org.example.rentapplicationbe.repository.IBookingRepository;
 import org.example.rentapplicationbe.repository.IHouseRepository;
@@ -80,5 +81,19 @@ public class BookingController {
             @RequestParam Long id) {
         List<Bookings> bookings = iBookingService.checkDate(start_date, end_date, id);
         return new ResponseEntity<>(bookings,HttpStatus.OK);
+    }
+
+    @GetMapping("/history-booking/{id}")
+    public ResponseEntity<List<HistoryBooking>> showHistory(@PathVariable Long id, @RequestHeader ("Authorization") String tokenHeader) {
+        String token = tokenHeader.substring(7);
+        String username = jwtService.getUsernameFromJwtToken(token);
+        List<HistoryBooking> houseList = iBookingService.findAllByAccount(id,username);
+        return new ResponseEntity<>(houseList,HttpStatus.OK);
+    }
+
+    @PutMapping("/editStatus/{id}")
+    public ResponseEntity<String> updateStatus(@PathVariable Long id) {
+        iBookingService.updateStatus(id);
+        return new ResponseEntity<>("Booking status updated successfully", HttpStatus.OK);
     }
 }

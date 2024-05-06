@@ -2,7 +2,9 @@ package org.example.rentapplicationbe.repository;
 
 import jakarta.transaction.Transactional;
 import org.example.rentapplicationbe.model.Entity.Bookings;
+import org.example.rentapplicationbe.model.Entity.House;
 import org.example.rentapplicationbe.model.dto.BookHouseDTO;
+import org.example.rentapplicationbe.model.dto.HistoryBooking;
 import org.example.rentapplicationbe.model.dto.HostDtoDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,10 +32,8 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
             "OR (start_date = :#{#bookings.start_date} AND end_date = :#{#bookings.end_date}) " +
             "OR (start_date >= :#{#bookings.start_date} AND start_date <= :#{#bookings.end_date}) " +
             "OR (end_date >= :#{#bookings.start_date} AND end_date <= :#{#bookings.end_date}))) " +
-            "AND :#{#bookings.start_date} > CURRENT_DATE", nativeQuery = true)
+            "AND :#{#bookings.start_date} >= CURRENT_DATE", nativeQuery = true)
     void saveBookAHouse(@Param("bookings") BookHouseDTO bookHouseDTO);
-
-
 
     @Query(nativeQuery = true, value = "SELECT * FROM bookings " +
             "WHERE (bookings.start_date BETWEEN :start_date AND :end_date) " +
@@ -44,4 +44,16 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
     List<Bookings> checkDate(@Param("start_date") LocalDate start_date,
                              @Param("end_date") LocalDate end_date,
                              @Param("id") Long id);
+
+    @Query(nativeQuery = true,value = "SELECT b.id, b.start_date,b.end_date,h.name_house,b.total_order,h.address,b.status \n" +
+            "FROM bookings b\n" +
+            "LEFT JOIN house h \n" +
+            "ON b.id_house = h.id\n" +
+            "WHERE b.id_account = :id")
+    List<HistoryBooking> findAllByAccount(@Param("id") Long id);
+
+    @Query(nativeQuery = true, value = "UPDATE bookings SET bookings.status = 'AVAILABLE' WHERE bookings.status = 'RENTED' AND bookings.id = :id")
+    @Modifying
+    @Transactional
+    void updateStatus(@Param("id") Long id);
 }
