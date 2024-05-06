@@ -3,6 +3,8 @@ package org.example.rentapplicationbe.service;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
+import org.example.rentapplicationbe.model.dto.HostDtoDetail;
+import org.example.rentapplicationbe.model.dto.UserDetail;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
@@ -30,5 +32,8 @@ public interface IAccountService {
     void updateAccountStatus(Long id, String newStatus);
 
     Optional<Account> findById(Long id);
+
+    Optional<UserDetail> findByIdUserDetail(Long id);
+
 
 }

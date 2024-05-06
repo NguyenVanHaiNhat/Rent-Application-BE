@@ -4,6 +4,8 @@ import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.dto.AccountUserDTO;
 import org.example.rentapplicationbe.model.dto.ChangePasswordUser;
+import org.example.rentapplicationbe.model.dto.HostDtoDetail;
+import org.example.rentapplicationbe.model.dto.UserDetail;
 import org.example.rentapplicationbe.repository.AccountRepository;
 import org.example.rentapplicationbe.repository.IHostDtoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +91,11 @@ public class AccountService implements IAccountService {
     @Override
     public Optional<Account> findById(Long id) {
         return accountRepository.findById(id);
+    }
+
+    @Override
+    public Optional<UserDetail> findByIdUserDetail(Long id) {
+        return accountRepository.findByIdUserDetail(id);
     }
 
 }

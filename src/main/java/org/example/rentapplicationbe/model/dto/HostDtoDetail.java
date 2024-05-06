@@ -1,6 +1,6 @@
 package org.example.rentapplicationbe.model.dto;
 
-public interface HostDtoDetail {
+public interface    HostDtoDetail {
     Long getId();
 
     String getFullName();
