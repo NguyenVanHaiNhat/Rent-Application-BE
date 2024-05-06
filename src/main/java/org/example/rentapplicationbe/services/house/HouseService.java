@@ -15,9 +15,10 @@ public class HouseService implements IHouseService {
     private IHouseRepository iHouseRepository;
 
     @Override
-    public List<House> findByIdDetailHouse(Long id) {
-        return iHouseRepository.findByIdDetailHouse(id);
+    public List<House> findByIdDetailHouse(Long id, String name, String status) {
+        return iHouseRepository.findByIdDetailHouse(id, "%" + name + "%", "%" + status + "%");
     }
+
     public List<House> findRentedHousesByOwnerId(Long id) {
         return iHouseRepository.findRentedHousesByOwnerId(id);
     }
