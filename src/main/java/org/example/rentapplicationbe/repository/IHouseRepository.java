@@ -22,16 +22,16 @@ public interface IHouseRepository extends JpaRepository<House, Long> {
     Optional<HouseDetail> findByIdHouseImages(@Param("id") Long id);
     @Query(nativeQuery = true, value = "SELECT DISTINCT h.* " +
             "FROM house h " +
-            "WHERE h.id_account = :id AND h.status = 'rented'")
+            "WHERE h.id_account = :id AND h.status = 'đang cho thuê'")
     List<House> findRentedHousesByOwnerId(@Param("id") Long id);
     @Query(nativeQuery = true, value = "SELECT DISTINCT h.* " +
             "FROM house h " +
-            "WHERE h.id_account = :id AND h.status = 'maintenance'")
+            "WHERE h.id_account = :id AND h.status = 'bảo trì'")
     List<House> findMaintenanceHousesByOwnerId(@Param("id") Long id);
 
     @Query(nativeQuery = true, value = "SELECT DISTINCT h.* " +
             "FROM house h " +
-            "WHERE h.id_account = :id AND h.status = 'available'")
+            "WHERE h.id_account = :id AND h.status = 'đang trống'")
     List<House> findAvailableHousesByOwnerId(@Param("id") Long id);
 }
 
