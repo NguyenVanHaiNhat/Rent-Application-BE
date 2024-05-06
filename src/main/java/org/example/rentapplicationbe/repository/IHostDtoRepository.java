@@ -24,6 +24,7 @@ public interface IHostDtoRepository extends JpaRepository<Account, Long> {
             "    bookings b ON acc.id = b.id_account\n" +
             "LEFT JOIN \n" +
             "    house h ON b.id_house = h.id\n" +
+            "WHERE acc.id_role = 2 \n" +
             "GROUP BY \n" +
             "    acc.id, acc.full_name, acc.phone, acc.`status`;")
     List<HostDtoDetail> getHostInfor();

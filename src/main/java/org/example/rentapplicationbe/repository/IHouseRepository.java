@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IHouseRepository extends JpaRepository<House, Long> {
-    @Query(nativeQuery = true, value = "SELECT DISTINCT h.* \n" +
+        @Query(nativeQuery = true, value = "SELECT DISTINCT h.* \n" +
             "FROM house h \n" +
             "WHERE id_account = :id and name_house like :name and status like :status ")
     List<House> findByIdDetailHouse(@Param("id") Long id, @Param("name") String name, @Param("status") String status);

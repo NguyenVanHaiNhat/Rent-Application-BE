@@ -11,8 +11,6 @@ public interface IHouseService {
     List<House> findMaintenanceHousesByOwnerId(Long id);
     List<House> findAvailableHousesByOwnerId(Long id);
 
-
-
     Optional<House> findById(Long id);
     Optional<HouseDetail>findByIdHouseImage(Long id);
 

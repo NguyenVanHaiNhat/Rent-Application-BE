@@ -34,21 +34,25 @@ public class HouseController {
         List<House> houses = iHouseService.findByIdDetailHouse(id, name, status);
         return ResponseEntity.ok(houses);
     }
+
     @GetMapping("/ownerRented/{id}")
     public ResponseEntity<List<House>> findAllRented(@PathVariable Long id) {
         List<House> houses = iHouseService.findRentedHousesByOwnerId(id);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
+
     @GetMapping("/ownerMaintenance/{id}")
     public ResponseEntity<List<House>> findAllHouseMaintenance(@PathVariable Long id) {
         List<House> houses = iHouseService.findMaintenanceHousesByOwnerId(id);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
+
     @GetMapping("/ownerAvailable/{id}")
     public ResponseEntity<List<House>> findAllHouseAvailable(@PathVariable Long id) {
         List<House> houses = iHouseService.findAvailableHousesByOwnerId(id);
         return new ResponseEntity<>(houses, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<House> getHouseById(@PathVariable Long id) {
         Optional<House> houseOptional = iHouseService.findById(id);
@@ -57,6 +61,7 @@ public class HouseController {
         }
         return new ResponseEntity<>(houseOptional.get(), HttpStatus.OK);
     }
+
     @GetMapping("/detail/image/{id}")
     public ResponseEntity<HouseDetail> getHouseByIdImages(@PathVariable Long id) {
         Optional<HouseDetail> houseImage = iHouseService.findByIdHouseImage(id);
@@ -81,11 +86,11 @@ public class HouseController {
     }
 
     @PostMapping("/post-house")
-    public ResponseEntity<House> postHouse(@RequestBody House house,@RequestHeader ("Authorization") String tokenHeader) {
+    public ResponseEntity<House> postHouse(@RequestBody House house, @RequestHeader("Authorization") String tokenHeader) {
         String token = tokenHeader.substring(7);
         String username = jwtService.getUsernameFromJwtToken(token);
         house.setAccount(accountRepository.findAccountByUsername(username));
         House house1 = iHouseService.save(house);
-        return new ResponseEntity<>(house1,HttpStatus.CREATED);
+        return new ResponseEntity<>(house1, HttpStatus.CREATED);
     }
 }
