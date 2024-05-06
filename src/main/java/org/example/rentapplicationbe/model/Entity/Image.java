@@ -13,13 +13,9 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String type;
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] image_data;
+    private String image_url;
     @ManyToOne
-    @JoinColumn(name = "id_account")
-    private Account account;
+    @JoinColumn(name = "id_house")
+    private House house;
 }
 

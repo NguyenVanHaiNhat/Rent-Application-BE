@@ -4,6 +4,7 @@ import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.House;
 import org.example.rentapplicationbe.model.dto.HouseDetail;
+import org.example.rentapplicationbe.repository.AccountRepository;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.services.house.IHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class HouseController {
     private JwtService jwtService;
     @Autowired
     private IAccountService iAccountService;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @GetMapping("/owner/{id}")
     public ResponseEntity<List<House>> findAllHouse(@PathVariable Long id, @RequestHeader("Authorization") String tokenHeader) {
@@ -80,5 +83,14 @@ public class HouseController {
         house.setAccount(account);
         House house1 = iHouseService.save(house);
         return new ResponseEntity<>(house1, HttpStatus.OK);
+    }
+
+    @PostMapping("/post-house")
+    public ResponseEntity<House> postHouse(@RequestBody House house,@RequestHeader ("Authorization") String tokenHeader) {
+        String token = tokenHeader.substring(7);
+        String username = jwtService.getUsernameFromJwtToken(token);
+        house.setAccount(accountRepository.findAccountByUsername(username));
+        House house1 = iHouseService.save(house);
+        return new ResponseEntity<>(house1,HttpStatus.CREATED);
     }
 }

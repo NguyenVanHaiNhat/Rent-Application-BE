@@ -28,4 +28,5 @@
                 "from `account`\n" +
                 "where id_role = 1;")
         List<AccountUserDTO> findAllUser();
+        Account findAccountByUsername(String username);
     }
