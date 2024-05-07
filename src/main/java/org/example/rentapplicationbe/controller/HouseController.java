@@ -33,7 +33,9 @@ public class HouseController {
                                                     @RequestParam(required = false, defaultValue = "") String status) {
         List<House> houses = iHouseService.findByIdDetailHouse(id, name, status);
         return ResponseEntity.ok(houses);
+
     }
+
 
     @GetMapping("/ownerRented/{id}")
     public ResponseEntity<List<House>> findAllRented(@PathVariable Long id) {

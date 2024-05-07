@@ -6,6 +6,7 @@ import org.example.rentapplicationbe.repository.IHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,12 @@ public class HouseService implements IHouseService {
     public List<House> findByIdDetailHouse(Long id, String name, String status) {
         return iHouseRepository.findByIdDetailHouse(id, "%" + name + "%", "%" + status + "%");
     }
+
+    @Override
+    public List<House> searchAll(Integer bedrooms, Integer bathrooms, String address, Long price, LocalDate checkInDate, LocalDate checkOutDate) {
+        return iHouseRepository.searchAll(bedrooms,bathrooms,"%" + address + "%", price ,checkInDate,checkOutDate);
+    }
+
 
     public List<House> findRentedHousesByOwnerId(Long id) {
         return iHouseRepository.findRentedHousesByOwnerId(id);
