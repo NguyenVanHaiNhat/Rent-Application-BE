@@ -24,10 +24,12 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
             "SELECT :#{#bookings.start_date}, :#{#bookings.end_date}, " +
             "(DATEDIFF(:#{#bookings.end_date}, :#{#bookings.start_date}) + 1) * " +
             "(SELECT price_of_day FROM house WHERE id = :#{#bookings.idHouse}), " +
-            ":#{#bookings.idHouse}, :#{#bookings.idAccount}, 'RENTED' " +
+            ":#{#bookings.idHouse}, :#{#bookings.idAccount}, " +
+            "IF(:#{#bookings.start_date} = CURRENT_DATE, 'STAYING', 'RENTED') " +
             "FROM dual " +
             "WHERE NOT EXISTS (SELECT * FROM bookings " +
             "WHERE id_house = :#{#bookings.idHouse} " +
+            "AND status = 'RENTED' " +
             "AND ((start_date <= :#{#bookings.end_date} AND end_date >= :#{#bookings.start_date}) " +
             "OR (start_date = :#{#bookings.start_date} AND end_date = :#{#bookings.end_date}) " +
             "OR (start_date >= :#{#bookings.start_date} AND start_date <= :#{#bookings.end_date}) " +
@@ -35,12 +37,21 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
             "AND :#{#bookings.start_date} >= CURRENT_DATE", nativeQuery = true)
     void saveBookAHouse(@Param("bookings") BookHouseDTO bookHouseDTO);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM bookings " +
-            "WHERE (bookings.start_date BETWEEN :start_date AND :end_date) " +
-            "OR (bookings.end_date BETWEEN :start_date AND :end_date) " +
-            "OR (:start_date BETWEEN bookings.start_date AND bookings.end_date) " +
-            "OR (:end_date BETWEEN bookings.start_date AND bookings.end_date) " +
-            "AND bookings.id_house = :id")
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE house SET status = 'RENTED' WHERE id = :#{#bookings.idHouse}", nativeQuery = true)
+    void updateHouseStatusToRented(@Param("bookings") BookHouseDTO bookHouseDTO);
+
+
+    @Query(nativeQuery = true, value = "SELECT * FROM bookings\n" +
+            "WHERE (\n" +
+            "    (bookings.start_date BETWEEN :start_date AND :end_date)\n" +
+            "    OR (bookings.end_date BETWEEN :start_date AND :end_date)\n" +
+            "    OR (:start_date BETWEEN bookings.start_date AND bookings.end_date)\n" +
+            "    OR (:end_date BETWEEN bookings.start_date AND bookings.end_date)\n" +
+            ")\n" +
+            "AND bookings.id_house = :id\n" +
+            "AND bookings.status <> 'CANCELED'\n")
     List<Bookings> checkDate(@Param("start_date") LocalDate start_date,
                              @Param("end_date") LocalDate end_date,
                              @Param("id") Long id);
