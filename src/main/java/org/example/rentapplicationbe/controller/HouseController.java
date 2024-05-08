@@ -95,4 +95,5 @@ public class HouseController {
         House house1 = iHouseService.save(house);
         return new ResponseEntity<>(house1, HttpStatus.CREATED);
     }
+
 }

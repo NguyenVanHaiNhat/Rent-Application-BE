@@ -36,7 +36,15 @@ public class HomeController {
             @RequestParam(required = false, defaultValue = "") LocalDate checkOutDate)
     {
         List<House> houses =iHouseService.searchAll(bedrooms, bathrooms, address, price,checkInDate,checkOutDate);
-        System.out.println(houses);
         return ResponseEntity.ok(houses);
+    }
+    @GetMapping("/top5")
+    public ResponseEntity<List<House>> top5House() {
+        List<House> top5MostBookedHouses = iHouseService.findTop5MostBookedHouses();
+        System.out.println(top5MostBookedHouses);
+        if (top5MostBookedHouses.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(top5MostBookedHouses);
     }
 }

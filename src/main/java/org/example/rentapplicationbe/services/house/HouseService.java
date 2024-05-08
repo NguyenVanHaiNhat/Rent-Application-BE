@@ -50,4 +50,9 @@ public class HouseService implements IHouseService {
     public House save(House house) {
         return iHouseRepository.save(house);
     }
+
+    @Override
+    public List<House> findTop5MostBookedHouses() {
+        return iHouseRepository.findTop5MostBookedHouses();
+    }
 }

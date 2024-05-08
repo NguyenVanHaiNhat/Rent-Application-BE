@@ -22,6 +22,8 @@ public class HostController {
     private JwtService jwtService;
     @Autowired
     private IAccountService iAccountService;
+
+
     @GetMapping("/dto")
     public ResponseEntity<List<HostDtoDetail>> findAllHost(@RequestHeader("Authorization") String tokenHeader) {
         String token = tokenHeader.substring(7);
