@@ -23,4 +23,7 @@ public class House {
     @ManyToOne
     @JoinColumn(name = "id_account")
     private Account account;
+    public boolean isRenting() {
+        return "Đang cho thuê".equals(this.status);
+    }
 }
