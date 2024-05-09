@@ -4,6 +4,7 @@ package org.example.rentapplicationbe.repository;
 import jakarta.transaction.Transactional;
 import org.example.rentapplicationbe.model.dto.HostDtoDetail;
 import org.example.rentapplicationbe.model.Entity.Account;
+import org.example.rentapplicationbe.model.dto.RentalSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -48,4 +49,15 @@ public interface IHostDtoRepository extends JpaRepository<Account, Long> {
     @Transactional
     @Query(nativeQuery = true, value = "UPDATE account SET status = :newStatus WHERE id = :id")
     void updateAccountStatus(@Param("id") Long id, @Param("newStatus") String newStatus);
+    @Query(nativeQuery = true, value = "select b.start_date, b.end_date, h.name_house, a.full_name, b.status\n" +
+            "from bookings b join account a on b.id_account = a.id\n" +
+            "               join house h on b.id_house = h.id\n" +
+            "where h.id_account = :id\n" +
+            "GROUP BY\n" +
+            "    b.start_date,\n" +
+            "    b.end_date,\n" +
+            "    h.name_house,\n" +
+            "    a.full_name,\n" +
+            "    b.status")
+    List<RentalSchedule> getSchedule(@Param("id") Long id);
 }
