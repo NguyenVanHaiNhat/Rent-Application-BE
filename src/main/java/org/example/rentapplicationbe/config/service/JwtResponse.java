@@ -10,15 +10,47 @@ public class JwtResponse {
     private String type = "Bearer";
     private String username;
     private String name;
+    private String avatarUrl;
+
+    public JwtResponse(Long id, String token, String type, String username, String name, String avatarUrl, Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
+        this.token = token;
+        this.type = type;
+        this.username = username;
+        this.name = name;
+        this.avatarUrl = avatarUrl;
+        this.authorities = authorities;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtResponse(Long id, String token, String username, String name, Collection<? extends GrantedAuthority> authorities) {
+    public JwtResponse(Long id, String token, String username, String name, Collection<? extends GrantedAuthority> authorities, String avatarUrl) {
         this.id = id;
         this.token = token;
         this.username = username;
         this.name = name;
         this.authorities = authorities;
+        this.avatarUrl = avatarUrl;
     }
+
+
 
     public String getName() {
         return name;

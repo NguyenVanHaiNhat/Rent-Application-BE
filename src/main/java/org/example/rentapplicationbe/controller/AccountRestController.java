@@ -56,7 +56,10 @@ public class AccountRestController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Account currentUser = userService.findByUsername(user.getUsername());
         System.out.println("kk " + currentUser);
-        return ResponseEntity.ok(new JwtResponse(currentUser.getId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities()));
+        String avatarUrl = currentUser.getAvatar();
+        System.out.println(avatarUrl);
+
+        return ResponseEntity.ok(new JwtResponse(currentUser.getId(), jwt, userDetails.getUsername(), userDetails.getUsername(), userDetails.getAuthorities(),avatarUrl));
     }
 
     @GetMapping("/getInfo")

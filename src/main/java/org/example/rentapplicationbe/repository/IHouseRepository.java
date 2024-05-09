@@ -26,6 +26,7 @@ public interface IHouseRepository extends JpaRepository<House, Long> {
                     "AND (:bathrooms IS NULL OR h.num_of_bathrooms <= :bathrooms) " +
                     "AND (h.address LIKE CONCAT('%', :address, '%') OR :address IS NULL) " +
                     "AND (:price IS NULL OR h.price_of_day <= :price) " +
+                    "AND h.status <> 'bảo trì' " +
                     "AND NOT EXISTS (" +
                     "   SELECT 1 FROM bookings b2 " +
                     "   WHERE h.id = b2.id_house " +
