@@ -25,11 +25,11 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
             "(DATEDIFF(:#{#bookings.end_date}, :#{#bookings.start_date}) + 1) * " +
             "(SELECT price_of_day FROM house WHERE id = :#{#bookings.idHouse}), " +
             ":#{#bookings.idHouse}, :#{#bookings.idAccount}, " +
-            "IF(:#{#bookings.start_date} = CURRENT_DATE, 'STAYING', 'RENTED') " +
+            "IF(:#{#bookings.start_date} = CURRENT_DATE, 'Đang ở', 'Đang chờ nhận phòng') " +
             "FROM dual " +
             "WHERE NOT EXISTS (SELECT * FROM bookings " +
             "WHERE id_house = :#{#bookings.idHouse} " +
-            "AND status = 'RENTED' " +
+            "AND bookings.status = 'Đang chờ nhận phòng' " +
             "AND ((start_date <= :#{#bookings.end_date} AND end_date >= :#{#bookings.start_date}) " +
             "OR (start_date = :#{#bookings.start_date} AND end_date = :#{#bookings.end_date}) " +
             "OR (start_date >= :#{#bookings.start_date} AND start_date <= :#{#bookings.end_date}) " +
@@ -39,7 +39,7 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE house SET status = 'RENTED' WHERE id = :#{#bookings.idHouse}", nativeQuery = true)
+    @Query(value = "UPDATE house SET status = 'Đang cho thuê' WHERE id = :#{#bookings.idHouse}", nativeQuery = true)
     void updateHouseStatusToRented(@Param("bookings") BookHouseDTO bookHouseDTO);
 
 
@@ -51,7 +51,7 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
             "    OR (:end_date BETWEEN bookings.start_date AND bookings.end_date)\n" +
             ")\n" +
             "AND bookings.id_house = :id\n" +
-            "AND bookings.status <> 'CANCELED'\n")
+            "AND bookings.status <> 'Đã hủy'\n")
     List<Bookings> checkDate(@Param("start_date") LocalDate start_date,
                              @Param("end_date") LocalDate end_date,
                              @Param("id") Long id);
@@ -63,7 +63,7 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
             "WHERE b.id_account = :id")
     List<HistoryBooking> findAllByAccount(@Param("id") Long id);
 
-    @Query(nativeQuery = true, value = "UPDATE bookings SET bookings.status = 'AVAILABLE' WHERE bookings.status = 'RENTED' AND bookings.id = :id")
+    @Query(nativeQuery = true, value = "UPDATE bookings SET bookings.status = 'Đã hủy' WHERE bookings.status = 'Đang chờ nhận phòng' AND bookings.id = :id")
     @Modifying
     @Transactional
     void updateStatus(@Param("id") Long id);
