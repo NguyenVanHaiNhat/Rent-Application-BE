@@ -1,6 +1,7 @@
 package org.example.rentapplicationbe.services;
 
 import org.example.rentapplicationbe.model.dto.HostDtoDetail;
+import org.example.rentapplicationbe.model.dto.RentalSchedule;
 import org.example.rentapplicationbe.repository.IHostDtoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,9 @@ public class HostService implements IHostService {
     @Override
     public void updateAccountStatus(Long id, String newStatus) {
         iHostDtoRepository.updateAccountStatus(id, newStatus);
+    }
+    @Override
+    public List<RentalSchedule> getSchedule(Long id){
+       return iHostDtoRepository.getSchedule(id);
     }
 }
