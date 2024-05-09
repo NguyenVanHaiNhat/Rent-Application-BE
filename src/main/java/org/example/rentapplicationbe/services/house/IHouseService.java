@@ -24,7 +24,6 @@ public interface IHouseService {
 
 
     House save(House house);
-
     List<House> findTop5MostBookedHouses();
-
+    void updateStatusForHouse(Long id, String newStatus);
 }

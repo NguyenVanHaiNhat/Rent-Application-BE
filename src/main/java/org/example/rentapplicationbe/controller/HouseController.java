@@ -95,5 +95,9 @@ public class HouseController {
         House house1 = iHouseService.save(house);
         return new ResponseEntity<>(house1, HttpStatus.CREATED);
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<String>updateStatus(@PathVariable Long id, @PathVariable String newStatus){
+        iHouseService.updateStatusForHouse(id,newStatus);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
