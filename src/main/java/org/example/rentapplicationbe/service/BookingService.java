@@ -19,6 +19,7 @@ public class BookingService implements IBookingService {
     @Override
     public void save(BookHouseDTO bookHouseDTO) {
         iBookingRepository.saveBookAHouse(bookHouseDTO);
+        iBookingRepository.updateHouseStatusToRented(bookHouseDTO);
     }
 
     @Override

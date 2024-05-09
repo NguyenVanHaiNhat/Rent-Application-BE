@@ -50,6 +50,10 @@ public class BookingController {
             if (idHouse == null) {
                 return new ResponseEntity<>("IdHouse is required", HttpStatus.BAD_REQUEST);
             }
+            List<Bookings> overlappingBookings = iBookingService.checkDate(bookHouseDTO.getStart_date(),bookHouseDTO.getEnd_date(),idHouse);
+            if (!overlappingBookings.isEmpty()) {
+                return new ResponseEntity<>("Booking overlaps with existing bookings", HttpStatus.BAD_REQUEST);
+            }
             String token = tokenHeader.substring(7);
             String username = jwtService.getUsernameFromJwtToken(token);
             bookHouseDTO.setIdAccount(iAccountService.findAccountByAccountName(username).get().getId());
