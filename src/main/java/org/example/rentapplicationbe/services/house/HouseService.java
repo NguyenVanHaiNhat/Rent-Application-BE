@@ -65,7 +65,7 @@ public class HouseService implements IHouseService {
         House house = iHouseRepository.findById(houseId)
                 .orElseThrow(() -> new HouseNotFoundException("Không tìm thấy nhà với id: " + houseId));
 
-        if (house.isRenting() && "Đang cho thuê".equals(newStatus)) {
+        if ("Đang cho thuê".equals(house.getStatus())) {
             throw new InvalidHouseStatusException("Không thể thay đổi trạng thái của nhà đang cho thuê.");
         }
 
