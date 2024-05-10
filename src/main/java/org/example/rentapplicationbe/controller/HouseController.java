@@ -100,8 +100,8 @@ public class HouseController {
         iHouseService.updateStatusForHouse(id,newStatus);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PutMapping("/{houseId}/status")
-    public void updateHouseStatus(@PathVariable Long houseId, @RequestParam String newStatus) {
+    @PutMapping("/{houseId}/status/{newStatus}")
+    public void updateHouseStatus(@PathVariable Long houseId, @PathVariable String newStatus) {
         iHouseService.updateHouseStatus(houseId, newStatus);
     }
 }
