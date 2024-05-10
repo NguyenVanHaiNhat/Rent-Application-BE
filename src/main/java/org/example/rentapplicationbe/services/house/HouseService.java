@@ -1,5 +1,7 @@
 package org.example.rentapplicationbe.services.house;
 
+import org.example.rentapplicationbe.exception.HouseNotFoundException;
+import org.example.rentapplicationbe.exception.InvalidHouseStatusException;
 import org.example.rentapplicationbe.model.Entity.House;
 import org.example.rentapplicationbe.model.dto.HouseDetail;
 import org.example.rentapplicationbe.repository.IHouseRepository;
@@ -50,9 +52,24 @@ public class HouseService implements IHouseService {
     public House save(House house) {
         return iHouseRepository.save(house);
     }
-
     @Override
     public List<House> findTop5MostBookedHouses() {
         return iHouseRepository.findTop5MostBookedHouses();
+    }
+    @Override
+    public void updateStatusForHouse(Long id, String newStatus){
+        iHouseRepository.updateStatusForHouse(id, newStatus);
+    }
+    @Override
+    public void updateHouseStatus(Long houseId, String newStatus) {
+        House house = iHouseRepository.findById(houseId)
+                .orElseThrow(() -> new HouseNotFoundException("Không tìm thấy nhà với id: " + houseId));
+
+        if (house.isRenting() && "Đang cho thuê".equals(newStatus)) {
+            throw new InvalidHouseStatusException("Không thể thay đổi trạng thái của nhà đang cho thuê.");
+        }
+
+        house.setStatus(newStatus);
+        iHouseRepository.save(house);
     }
 }
