@@ -16,4 +16,7 @@ public interface IBookingService {
     List<Bookings> checkDate(LocalDate start_date,LocalDate end_date,Long id );
     List<HistoryBooking> findAllByAccount(Long id, String username);
     void updateStatus(Long id);
+
+    int checkIdAccountAndStatus(@Param("id_house")Long id_house,@Param("id_account")Long id_account);
+
 }

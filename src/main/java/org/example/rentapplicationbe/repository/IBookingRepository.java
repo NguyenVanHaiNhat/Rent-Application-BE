@@ -67,4 +67,9 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
     @Modifying
     @Transactional
     void updateStatus(@Param("id") Long id);
+
+    @Query(nativeQuery = true,value = "SELECT COUNT(*) \n" +
+            "FROM bookings \n" +
+            "WHERE id_house = :id_house AND id_account = :id_account AND status = 'Đã trả phòng'")
+int checkIdAccountAndStatus(@Param("id_house")Long id_house,@Param("id_account")Long id_account);
 }

@@ -100,4 +100,9 @@ public class BookingController {
         iBookingService.updateStatus(id);
         return new ResponseEntity<>("Booking status updated successfully", HttpStatus.OK);
     }
+    @GetMapping("/checkIdAccount")
+    public ResponseEntity<Integer>checkIdAccountStatus(@RequestParam Long id_house,@RequestParam Long id_account){
+       int bookings = iBookingService.checkIdAccountAndStatus(id_house,id_account);
+         return new ResponseEntity<>(bookings,HttpStatus.OK);
+    }
 }

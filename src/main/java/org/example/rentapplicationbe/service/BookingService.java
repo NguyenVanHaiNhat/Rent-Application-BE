@@ -43,5 +43,10 @@ public class BookingService implements IBookingService {
         iBookingRepository.updateStatus(id);
     }
 
+    @Override
+    public int checkIdAccountAndStatus(Long id_house,Long id_account) {
+        return iBookingRepository.checkIdAccountAndStatus(id_house,id_account);
+    }
+
 
 }
