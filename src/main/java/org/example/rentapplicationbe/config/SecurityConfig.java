@@ -37,7 +37,7 @@ public class SecurityConfig {
     @Autowired
     private UserService userService;
 
-    private String allowOrigins = "http://localhost:3000";
+    private String allowOrigins = "http://localhost:3000, http://localhost:8080";
 
     @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationFilter() {

@@ -74,6 +74,8 @@ public interface IHouseRepository extends JpaRepository<House, Long> {
                     "ORDER BY total_bookings DESC " +
                     "LIMIT 5")
     List<House> findTop5MostBookedHouses();
+    @Query(nativeQuery = true, value = "UPDATE house SET status = :newStatus WHERE id = :id")
+    void updateStatusForHouse(@Param("id") Long id, String newStatus);
 }
 
 
