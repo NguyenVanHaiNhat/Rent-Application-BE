@@ -18,4 +18,5 @@ public interface HouseDetail {
     String getImage();
 
     String getAll_images();
+    Long getId_account();
 }
