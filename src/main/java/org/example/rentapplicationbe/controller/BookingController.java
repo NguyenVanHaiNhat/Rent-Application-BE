@@ -4,9 +4,7 @@ import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.Entity.Account;
 import org.example.rentapplicationbe.model.Entity.Bookings;
 import org.example.rentapplicationbe.model.Entity.House;
-import org.example.rentapplicationbe.model.dto.BookHouseDTO;
-import org.example.rentapplicationbe.model.dto.HistoryBooking;
-import org.example.rentapplicationbe.model.dto.HostDtoDetail;
+import org.example.rentapplicationbe.model.dto.*;
 import org.example.rentapplicationbe.repository.IBookingRepository;
 import org.example.rentapplicationbe.repository.IHouseRepository;
 import org.example.rentapplicationbe.service.IAccountService;
@@ -104,5 +102,38 @@ public class BookingController {
     public ResponseEntity<Integer>checkIdAccountStatus(@RequestParam Long id_house,@RequestParam Long id_account){
        int bookings = iBookingService.checkIdAccountAndStatus(id_house,id_account);
          return new ResponseEntity<>(bookings,HttpStatus.OK);
+    }
+    @GetMapping("/totalIncome")
+    public ResponseEntity<List<TotalIncome>> findAllTotalIncome(@RequestParam Long id
+            , @RequestHeader ("Authorization") String tokenHeader) {
+        String token = tokenHeader.substring(7);
+        String username = jwtService.getUsernameFromJwtToken(token);
+        List<TotalIncome> totalIncomes = iBookingService.getTotalIncome(id,username);
+        return new ResponseEntity<>(totalIncomes,HttpStatus.OK);
+    }
+    @GetMapping("/totalIncomeRange")
+    public ResponseEntity<List<TotalIncomeRange>> findAllTotalIncomeRange(
+            @RequestParam Long id,
+            @RequestParam(value = "startYear", required = true) int startYear,
+            @RequestParam(value = "startMonth", required = true) int startMonth,
+            @RequestParam(value = "endYear", required = true) int endYear,
+            @RequestParam(value = "endMonth", required = true) int endMonth,
+            @RequestHeader("Authorization") String tokenHeader
+    ) {
+        if (startMonth < 1 || startMonth > 12 || endMonth < 1 || endMonth > 12) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (endYear < startYear || (endYear == startYear && endMonth < startMonth)) {
+            return ResponseEntity.badRequest().build();
+        }
+        String startMonthYear = String.valueOf(startYear * 100 + startMonth);
+        String endMonthYear = String.valueOf(endYear * 100 + endMonth);
+        String token = tokenHeader.substring(7);
+        String username = jwtService.getUsernameFromJwtToken(token);
+        List<TotalIncomeRange> totalIncomes = iBookingService.getTotalIncomeRange(id, startMonthYear, endMonthYear, username);
+        if (totalIncomes.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return new ResponseEntity<>(totalIncomes, HttpStatus.OK);
     }
 }
