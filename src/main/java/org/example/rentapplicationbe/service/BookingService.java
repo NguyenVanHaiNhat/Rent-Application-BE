@@ -5,6 +5,8 @@ import org.example.rentapplicationbe.model.Entity.Bookings;
 import org.example.rentapplicationbe.model.Entity.House;
 import org.example.rentapplicationbe.model.dto.BookHouseDTO;
 import org.example.rentapplicationbe.model.dto.HistoryBooking;
+import org.example.rentapplicationbe.model.dto.TotalIncome;
+import org.example.rentapplicationbe.model.dto.TotalIncomeRange;
 import org.example.rentapplicationbe.repository.IBookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class BookingService implements IBookingService {
     @Override
     public void save(BookHouseDTO bookHouseDTO) {
         iBookingRepository.saveBookAHouse(bookHouseDTO);
+        iBookingRepository.updateHouseStatusToRented(bookHouseDTO);
     }
 
     @Override
@@ -40,6 +43,20 @@ public class BookingService implements IBookingService {
     @Override
     public void updateStatus(Long id) {
         iBookingRepository.updateStatus(id);
+    }
+
+    @Override
+    public int checkIdAccountAndStatus(Long id_house,Long id_account) {
+        return iBookingRepository.checkIdAccountAndStatus(id_house,id_account);
+    }
+    @Override
+    public List<TotalIncome> getTotalIncome(Long id, String username) {
+        return iBookingRepository.getTotalIncome(id);
+    }
+
+    @Override
+    public List<TotalIncomeRange> getTotalIncomeRange(Long id, String startMonthYear, String endMonthYear, String username) {
+        return iBookingRepository.getTotalIncomeRange(id,startMonthYear,endMonthYear);
     }
 
 

@@ -2,9 +2,11 @@ package org.example.rentapplicationbe.controller;
 
 import org.example.rentapplicationbe.config.service.JwtService;
 import org.example.rentapplicationbe.model.dto.HostDtoDetail;
+import org.example.rentapplicationbe.model.dto.RentalSchedule;
 import org.example.rentapplicationbe.service.IAccountService;
 import org.example.rentapplicationbe.services.IHostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ public class HostController {
     private JwtService jwtService;
     @Autowired
     private IAccountService iAccountService;
+
+
     @GetMapping("/dto")
     public ResponseEntity<List<HostDtoDetail>> findAllHost(@RequestHeader("Authorization") String tokenHeader) {
         String token = tokenHeader.substring(7);
@@ -42,5 +46,9 @@ public class HostController {
     public ResponseEntity<String>updateStatus(@PathVariable Long id, @PathVariable String newStatus){
         iHostService.updateAccountStatus(id,newStatus);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<List<RentalSchedule>> getSchedule(@PathVariable Long id){
+        return new ResponseEntity<>(iHostService.getSchedule(id), HttpStatus.OK);
     }
 }
