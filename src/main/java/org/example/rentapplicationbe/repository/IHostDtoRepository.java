@@ -18,13 +18,13 @@ public interface IHostDtoRepository extends JpaRepository<Account, Long> {
             "    acc.phone AS phone,\n" +
             "    COALESCE(SUM(DATEDIFF(b.end_date, b.start_date) * h.price_of_day), 0) AS totalRevenue,\n" +
             "    acc.`status` AS status,\n" +
-            "    COUNT(h.id) AS numberOfHouses\n" +
+            "    COUNT(DISTINCT h.id) AS numberOfHouses\n" +
             "FROM \n" +
             "    account acc\n" +
             "LEFT JOIN \n" +
-            "    bookings b ON acc.id = b.id_account\n" +
+            "    house h ON h.id_account = acc.id\n" +
             "LEFT JOIN \n" +
-            "    house h ON b.id_house = h.id\n" +
+            "    bookings b ON h.id = b.id_house\n" +
             "WHERE acc.id_role = 3 \n" +
             "GROUP BY \n" +
             "    acc.id, acc.full_name, acc.phone, acc.`status`;")
@@ -38,10 +38,10 @@ public interface IHostDtoRepository extends JpaRepository<Account, Long> {
             "\t\tacc.address AS address,\n" +
             "\t\tacc.`status` AS status,\n" +
             "\t\tCOALESCE(SUM(DATEDIFF(b.end_date, b.start_date) * h.price_of_day), 0) AS totalRevenue,\n" +
-            "        COUNT(h.id) AS numberOfHouses\n" +
+            "        COUNT(DISTINCT h.id) AS numberOfHouses\n" +
             "\tFROM account acc\n" +
-            "\tLEFT JOIN bookings b ON acc.id = b.id_account\n" +
-            "\tLEFT JOIN house h ON b.id_house = h.id\n" +
+            "\tLEFT JOIN  house h ON h.id_account = acc.id\n" +
+            "\tLEFT JOIN bookings b ON h.id = b.id_house\n" +
             "\tGROUP BY acc.id, acc.avatar, acc.username, acc.full_name, acc.phone, acc.address, acc.`status`\n" +
             "    having acc.id = :id")
     Optional<HostDtoDetail> findByIdHost(@Param("id") Long id);
