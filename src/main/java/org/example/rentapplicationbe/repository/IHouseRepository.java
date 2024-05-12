@@ -85,5 +85,3 @@ public interface IHouseRepository extends JpaRepository<House, Long> {
 
 
 
-
-
