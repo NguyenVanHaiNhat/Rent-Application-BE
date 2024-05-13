@@ -98,16 +98,16 @@ public class AccountRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/change-password")
-    public ResponseEntity<String> changePassword(
-            @RequestBody ChangePasswordUser request, @RequestHeader("Authorization") String tokenHeader
-    ) {
-        String token = tokenHeader.substring(7);
-        String username1 = jwtService.getUsernameFromJwtToken(token);
-        iAccountService.findAccountByAccountName(username1);
-        iAccountService.changePassword(username1, request);
-        return ResponseEntity.ok().build();
-    }
+//    @PutMapping("/change-password")
+//    public ResponseEntity<String> changePassword(
+//            @RequestBody ChangePasswordUser request, @RequestHeader("Authorization") String tokenHeader
+//    ) {
+//        String token = tokenHeader.substring(7);
+//        String username1 = jwtService.getUsernameFromJwtToken(token);
+//        iAccountService.findAccountByAccountName(username1);
+//        iAccountService.changePassword(username1, request);
+//        return ResponseEntity.ok().build();
+//    }
 
     @GetMapping("/checkUserName")
     private ResponseEntity<List<Account>> checkUserName(@RequestParam String userName) { // kiểm tra tên tài khoản đã tồn tại chưa

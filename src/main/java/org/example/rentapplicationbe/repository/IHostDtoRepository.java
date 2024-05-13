@@ -16,7 +16,7 @@ public interface IHostDtoRepository extends JpaRepository<Account, Long> {
             "        acc.id as id,\n" +
             "    acc.full_name AS fullName,\n" +
             "    acc.phone AS phone,\n" +
-            "    COALESCE(SUM(DATEDIFF(b.end_date, b.start_date) * h.price_of_day), 0) AS totalRevenue,\n" +
+            "    COALESCE(SUM((DATEDIFF(b.end_date, b.start_date) + 1) * h.price_of_day), 0) AS totalRevenue,\n" +
             "    acc.`status` AS status,\n" +
             "    COUNT(DISTINCT h.id) AS numberOfHouses\n" +
             "FROM \n" +
@@ -37,7 +37,7 @@ public interface IHostDtoRepository extends JpaRepository<Account, Long> {
             "\t\tacc.phone AS phone,\n" +
             "\t\tacc.address AS address,\n" +
             "\t\tacc.`status` AS status,\n" +
-            "\t\tCOALESCE(SUM(DATEDIFF(b.end_date, b.start_date) * h.price_of_day), 0) AS totalRevenue,\n" +
+            "\t\tCOALESCE(SUM((DATEDIFF(b.end_date, b.start_date) + 1) * h.price_of_day), 0) AS totalRevenue,\n" +
             "        COUNT(DISTINCT h.id) AS numberOfHouses\n" +
             "\tFROM account acc\n" +
             "\tLEFT JOIN  house h ON h.id_account = acc.id\n" +
