@@ -15,37 +15,13 @@ The demand for tourist outings of people increases, people with empty houses nee
 - [@toai2001](https://github.com/toai2001)
 
 
-## Deployment
-
-To install libraries run
-
-```bash
-  npm install
-```
-
-## Installation
-
-Clone the Api project
-
-```bash
-  git clone https://github.com/NguyenVanHaiNhat/Rent-Application-FE
-```
-
 
 
 
 ## Run Locally
 
-Install my-project with npm
+Run this project with spring boot
 
-```bash
-  cd my-project
-```
-And run
-
-```bash
-  npm start
-```
     
 ## Features
 
