@@ -69,7 +69,7 @@ public interface IHouseRepository extends JpaRepository<House, Long> {
             "SELECT h.*, COUNT(b.id) AS total_bookings " +
                     "FROM house h " +
                     "LEFT JOIN bookings b ON h.id = b.id_house " +
-                    "WHERE b.status = 'đã xong' " +
+                    "WHERE b.status = 'Đã trả phòng' " +
                     "GROUP BY h.id " +
                     "ORDER BY total_bookings DESC " +
                     "LIMIT 5")

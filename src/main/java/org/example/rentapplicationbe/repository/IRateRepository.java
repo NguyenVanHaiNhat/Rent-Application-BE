@@ -23,7 +23,7 @@ public interface IRateRepository extends JpaRepository<Rate, Long> {
     @Query(nativeQuery = true, value = "INSERT INTO rate (id_account, id_house,time_rate, stars, content) " +
             "SELECT b.id_account, b.id_house,current_time(),:#{#rate.stars},:#{#rate.content} " +
             "FROM bookings b " +
-            "WHERE  b.id_house = :id AND b.id_account = :id_account AND b.status = 'Đã trả phòng'")
+            "WHERE b.id_house = :id AND b.id_account = :id_account AND b.status = 'Đã trả phòng'")
     void createRate(@Param("id") Long id,@Param("id_account") Long id_account, @Param("rate") Rate rate);
 
 }

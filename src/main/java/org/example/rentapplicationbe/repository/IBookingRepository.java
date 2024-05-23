@@ -71,35 +71,44 @@ public interface IBookingRepository extends JpaRepository<Bookings,Long> {
             "WHERE id_house = :id_house AND id_account = :id_account AND status = 'Đã trả phòng'")
 int checkIdAccountAndStatus(@Param("id_house")Long id_house,@Param("id_account")Long id_account);
 
-    @Query(nativeQuery = true, value = "SELECT \n" +
-            "    MONTH(start_date) AS months,\n" +
-            "    YEAR(start_date) AS years,\n" +
-            "    COALESCE(SUM(total_order), 0) AS total_money\n" +
-            "FROM \n" +
-            "    bookings\n" +
-            "WHERE\n" +
-            "    bookings.id_account = :id\n" +
-            "    AND status <> 'Đã hủy'\n" +
-            "GROUP BY \n" +
-            "    YEAR(start_date), MONTH(start_date)\n" +
-            "ORDER BY \n" +
-            "    YEAR(start_date), MONTH(start_date);\n")
+    @Query(nativeQuery = true, value =
+            "SELECT " +
+                    "    MONTH(b.start_date) AS months, " +
+                    "    YEAR(b.start_date) AS years, " +
+                    "    COALESCE(SUM(b.total_order), 0) AS total_money " +
+                    "FROM " +
+                    "    bookings b " +
+                    "JOIN " +
+                    "    account a ON b.id_account = a.id " +
+                    "JOIN " +
+                    "    house h ON h.id = b.id_house " +
+                    "WHERE " +
+                    "    h.id_account = :id " +
+                    "    AND b.status <> 'Đã hủy' " +
+                    "GROUP BY " +
+                    "    YEAR(b.start_date), MONTH(b.start_date) " +
+                    "ORDER BY " +
+                    "    YEAR(b.start_date), MONTH(b.start_date);")
     List<TotalIncome> getTotalIncome(@Param("id") Long id);
 
-    @Query(nativeQuery = true, value = "SELECT \n" +
-            "    MONTH(start_date) AS months,\n" +
-            "    YEAR(start_date) AS years,\n" +
-            "    COALESCE(SUM(total_order), 0) AS total_money\n" +
-            "FROM \n" +
-            "    bookings\n" +
-            "WHERE\n" +
-            "    bookings.id_account = :id\n" +
-            "    AND status <> 'Đã hủy'\n" +
-            "    AND (YEAR(start_date) * 100 + MONTH(start_date)) BETWEEN :startMonthYear AND :endMonthYear\n" +
-            "GROUP BY \n" +
-            "    YEAR(start_date), MONTH(start_date)\n" +
-            "ORDER BY \n" +
-            "    YEAR(start_date), MONTH(start_date);\n")
+
+    @Query(nativeQuery = true, value =
+            "SELECT " +
+                    "    MONTH(b.start_date) AS months, " +
+                    "    YEAR(b.start_date) AS years, " +
+                    "    COALESCE(SUM(b.total_order), 0) AS total_money " +
+                    "FROM " +
+                    "    bookings b " +
+                    "JOIN " +
+                    "    house h ON h.id = b.id_house " +
+                    "WHERE " +
+                    "    h.id_account = :id " +
+                    "    AND b.status <> 'Đã hủy' " +
+                    "    AND (YEAR(b.start_date) * 100 + MONTH(b.start_date)) BETWEEN :startMonthYear AND :endMonthYear " +
+                    "GROUP BY " +
+                    "    YEAR(b.start_date), MONTH(b.start_date) " +
+                    "ORDER BY " +
+                    "    YEAR(b.start_date), MONTH(b.start_date);")
     List<TotalIncomeRange> getTotalIncomeRange(
             @Param("id") Long id,
             @Param("startMonthYear") String startMonthYear,
